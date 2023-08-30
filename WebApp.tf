@@ -20,20 +20,17 @@ resource "azurerm_linux_web_app" "webapp_snitches" {
     }
   }
 
-  depends_on = [
-    azurerm_service_plan.ASP_ME
-  ]
+  depends_on = [ azurerm_service_plan.Asp_Snitches]
 }
 
 # The code -----------------------------------------------------------------------------------
-
-resource "azurerm_app_service_source_control" "Production_Code" {
-  app_id   = azurerm_linux_web_app.webapp_snitches.id
-  repo_url = "https://github.com/Labb3PubliceringSnitches/PolisApp.git"
-  branch   = "master"
-  depends_on = [ azurerm_linux_web_app.webapp_snitches,
-   azurerm_app_service_source_control_token.token]
-}
+#HEJ
+# resource "azurerm_app_service_source_control" "Production_Code" {
+#   app_id   = azurerm_linux_web_app.webapp_snitches.id
+#   repo_url = "https://github.com/Labb3PubliceringSnitches/PolisApp.git"
+#   branch   = "master"
+#   depends_on = [ azurerm_linux_web_app.webapp_snitches]
+# }
 
 ## Connect to log analytics 
 
@@ -72,7 +69,7 @@ resource "azurerm_application_insights" "webapp_AppInsights" {
   resource_group_name = local.RGname
   application_type    = "web"
 
-  depends_on = [ azurerm_resource_group.webapp_snitches ]
+  depends_on = [ azurerm_resource_group.Snitches_RG ]
 }
 
 resource "azurerm_application_insights_smart_detection_rule" "Snitches_WA_DS" {
@@ -83,3 +80,9 @@ resource "azurerm_application_insights_smart_detection_rule" "Snitches_WA_DS" {
   depends_on = [ azurerm_application_insights.webapp_AppInsights ]
 }
 
+
+# resource "azurerm_app_service_source_control_token" "token" {
+#   type  = "GitHub"
+#   token = "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"
+#   depends_on = [ azurerm_resource_group.Snitches_RG ]
+# }
