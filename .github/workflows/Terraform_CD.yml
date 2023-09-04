@@ -3,11 +3,11 @@ name: Terraform CD
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - Labb3PubliceringSnitches/PolisApp/
+      - .github/workflows/cicd.yml
       - Labb3PubliceringSnitches/PolisappAPI/
-      - .github/workflows/main.yml
 
 jobs:
   deploy:
