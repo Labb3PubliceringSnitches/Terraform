@@ -10,6 +10,12 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      TF_VAR_AZURE_SUB_ID_SECRET: ${{ secrets.AZURE_SUB_ID }}
+      TF_VAR_AZURE_TENANT_ID_SECRET: ${{ secrets.AZURE_TENANT }}
+      TF_VAR_AZURE_CLIENT_ID_SECRET: ${{ secrets.AZURE_CLIENT_ID }}
+      TF_VAR_AZURE_CLIENT_SECRET_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      
 
     steps:
       - name: Checkout Terraform Repository
