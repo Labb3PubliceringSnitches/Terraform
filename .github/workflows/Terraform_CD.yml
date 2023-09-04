@@ -2,7 +2,7 @@ name: Terraform CD
 
 on:
   repository_dispatch:
-    types: [PolisApp-push]
+    types: [PolisApp-push,PolisAppAPI-push]
 
 jobs:
   deploy:
