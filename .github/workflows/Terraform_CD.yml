@@ -1,13 +1,8 @@
 name: Terraform CD
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - Labb3PubliceringSnitches/PolisApp/
-      - .github/workflows/cicd.yml
-      - Labb3PubliceringSnitches/PolisappAPI/
+  repository_dispatch:
+    types: [PolisApp-push]
 
 jobs:
   deploy:
