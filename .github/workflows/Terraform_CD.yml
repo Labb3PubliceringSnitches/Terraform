@@ -1,8 +1,11 @@
 name: Terraform CD
 
 on:
-  repository_dispatch:
-    types: [PolisAppAPI-push, PolisApp-push]
+  workflow_dispatch:
+    inputs:
+      event_type:
+        description: Update Terraform
+        required: true
 
 jobs:
   deploy:
