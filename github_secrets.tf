@@ -1,6 +1,4 @@
-data "github_secret" "AZURE_SUB_ID_SECRET" {
-  secret_name = "AZURE_SUB_ID"
-}
+variable "AZURE_SUB_ID_SECRET" {}
 data "github_secret" "AZURE_TENANT_ID_SECRET" {
   secret_name = "AZURE_TENANT"
 }
