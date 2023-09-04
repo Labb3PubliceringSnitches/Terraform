@@ -9,10 +9,10 @@ terraform {
 
 provider "azurerm" {
   # Configuration options
-  subscription_id = "${{secrets.AZURE_SUB_ID}}"
-  tenant_id = "${{secrets.AZURE_TENANT}}"
-  client_id = "${{secrets.AZURE_CLIENT_ID}}"
-  client_secret = "${{secrets.AZURE_CLIENT_SECRET}}"
+  subscription_id = data.github_secret.AZURE_SUB_ID_SECRET
+  tenant_id = data.github_secret.AZURE_TENANT_ID_SECRET
+  client_id = data.github_secret.AZURE_CLIENT_ID_SECRET
+  client_secret = data.github_secret.AZURE_CLIENT_SECRET_SECRET
 
   features {
      key_vault {
