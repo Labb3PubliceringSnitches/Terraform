@@ -15,8 +15,8 @@ resource "azurerm_app_service_plan" "function_plan" {
   kind                = "FunctionApp"
 
   sku {
-    tier = "Basic"
-    size = "B1"
+    tier = "Dynamic"
+    size = "Y1"
   }
 
   depends_on = [ azurerm_resource_group.Snitches_RG ]
@@ -29,6 +29,4 @@ resource "azurerm_function_app" "polisapi" {
   app_service_plan_id        = azurerm_app_service_plan.function_plan.id
   storage_account_name       = azurerm_storage_account.Function_storage.name
   storage_account_access_key = azurerm_storage_account.Function_storage.primary_access_key
-
-  depends_on = [ azurerm_app_service_plan.function_plan ]
 }
