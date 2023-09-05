@@ -40,7 +40,10 @@ jobs:
         run: terraform plan -out=tfplan -state=terraform.tfstate
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan -state=terraform.tfstate
+        run: |
+          export TF_CLI_ARGS="-state=terraform.tfstate"
+          terraform apply -auto-approve tfplan
+
 
       - name: Remove Plan File
         run: rm tfplan
