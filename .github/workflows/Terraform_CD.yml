@@ -18,6 +18,12 @@ jobs:
       TF_VAR_SOURCE_PAT: ${{ secrets.SOURCE_PAT }}
 
     steps:
+      - name: Azure Login
+        run: az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT }}
+
+      - name: Set Azure Subscription
+        run: az account set --subscription ${{ secrets.AZURE_SUB_ID }}
+
       - name: Checkout Terraform Repository
         uses: actions/checkout@v2
         with:
