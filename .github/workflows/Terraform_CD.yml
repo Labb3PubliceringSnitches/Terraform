@@ -18,12 +18,6 @@ jobs:
       TF_VAR_SOURCE_PAT: ${{ secrets.SOURCE_PAT }}
 
     steps:
-      - name: Azure Login
-        run: az login
-
-      - name: Select Azure Subscription
-        run: az account set --subscription ${{ secrets.AZURE_SUB_ID }}  # Replace <subscription-id> with your subscription ID
-
       - name: Checkout Terraform Repository
         uses: actions/checkout@v2
         with:
