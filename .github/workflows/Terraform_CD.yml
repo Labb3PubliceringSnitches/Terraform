@@ -16,7 +16,6 @@ jobs:
       TF_VAR_AZURE_CLIENT_ID_SECRET: ${{ secrets.AZURE_CLIENT_ID }}
       TF_VAR_AZURE_CLIENT_SECRET_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       TF_VAR_SOURCE_PAT: ${{ secrets.SOURCE_PAT }}
-      
 
     steps:
       - name: Download Blob
@@ -36,14 +35,20 @@ jobs:
         with:
           terraform_version: latest
 
+      - name: Use Downloaded State File
+        run: |
+          mv terraform.tfstate /github/workspace/terraform.tfstate  # Move the downloaded state file to the workspace
+
       - name: Terraform Init
-        run: terraform init
+        run: |
+          terraform init -backend-config="path=terraform.tfstate"
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan
 
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
+
 
       - name: Remove Plan File
         run: rm tfplan
