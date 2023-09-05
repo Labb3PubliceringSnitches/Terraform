@@ -22,7 +22,6 @@ jobs:
       - name: Download Blob
         run: |
           az storage blob download --account-name TFSTATESTORAGE --container-name snitchedstate --name terraform.tfstate --type block --connection-string "DefaultEndpointsProtocol=https;AccountName=snitchedstate;AccountKey=g2SEECR93QBJdFaru+BM6oQyJOWTt5Vh/5htsIH3VkO+L3E3iPVHv42DkZrX8egDZZ3CP+Ubhw8I+AStyeKP2w==;EndpointSuffix=core.windows.ne"
-        displayName: 'Download Blob'
 
       - name: Checkout Terraform Repository
         uses: actions/checkout@v2
