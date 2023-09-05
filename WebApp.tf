@@ -80,3 +80,9 @@ resource "azurerm_application_insights_smart_detection_rule" "Snitches_WA_DS" {
   depends_on = [ azurerm_application_insights.webapp_AppInsights ]
 }
 
+
+resource "azurerm_app_service_source_control_token" "token" {
+  type  = "GitHub"
+  token = var.SOURCE_PAT
+  depends_on = [ azurerm_resource_group.Snitches_RG ]
+}
