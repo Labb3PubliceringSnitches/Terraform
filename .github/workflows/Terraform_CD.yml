@@ -15,7 +15,6 @@ jobs:
       TF_VAR_AZURE_TENANT_ID_SECRET: ${{ secrets.AZURE_TENANT }}
       TF_VAR_AZURE_CLIENT_ID_SECRET: ${{ secrets.AZURE_CLIENT_ID }}
       TF_VAR_AZURE_CLIENT_SECRET_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-      
 
     steps:
       - name: Checkout Terraform Repository
@@ -35,7 +34,8 @@ jobs:
         run: terraform plan -out=tfplan
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
+        run: |
+          terraform apply -auto-approve -var "create_resource_group=false" tfplan
 
       - name: Remove Plan File
         run: rm tfplan
