@@ -16,13 +16,9 @@ jobs:
       TF_VAR_AZURE_CLIENT_ID_SECRET: ${{ secrets.AZURE_CLIENT_ID }}
       TF_VAR_AZURE_CLIENT_SECRET_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       TF_VAR_SOURCE_PAT: ${{ secrets.SOURCE_PAT }}
+      
 
     steps:
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - name: Checkout Terraform Repository
         uses: actions/checkout@v2
         with:
@@ -31,23 +27,10 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 0.15.5 # Specify a specific Terraform version here
-
-      - name: Show Azure Credentials
-        run: |
-          echo "Azure Subscription ID: $TF_VAR_AZURE_SUB_ID_SECRET"
-          echo "Azure Tenant ID: $TF_VAR_AZURE_TENANT_ID_SECRET"
-          echo "Azure Client ID: $TF_VAR_AZURE_CLIENT_ID_SECRET"
-          echo "Azure Client Secret: ***" # Don't print secrets
-          echo "Source PAT: ***"
+          terraform_version: latest
 
       - name: Terraform Init
-        run: |
-          terraform init \
-            -backend-config="resource_group_name=Labb3-Snitches-RG" \
-            -backend-config="storage_account_name=snitchedstate" \
-            -backend-config="container_name=statecontainer" \
-            -backend-config="key=terraform.tfstate"
+        run: terraform init
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan
