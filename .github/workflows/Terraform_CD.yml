@@ -32,17 +32,19 @@ jobs:
         with:
           terraform_version: latest
 
+      - name: Use Downloaded State File
+        run: |
+          mv terraform.tfstate /github/workspace/terraform.tfstate  # Move the downloaded state file to the workspace
+
       - name: Terraform Init
         run: |
           terraform init -backend-config="path=terraform.tfstate"
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan -state=terraform.tfstate
+        run: terraform plan -out=tfplan
 
       - name: Terraform Apply
-        run: |
-          export TF_CLI_ARGS="-state=terraform.tfstate"
-          terraform apply -auto-approve tfplan
+        run: terraform apply -auto-approve tfplan
 
 
       - name: Remove Plan File
