@@ -37,10 +37,10 @@ jobs:
           terraform init -backend-config="path=terraform.tfstate"
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform plan -out=tfplan -state=terraform.tfstate
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -auto-approve tfplan -state=terraform.tfstate
 
       - name: Remove Plan File
         run: rm tfplan
