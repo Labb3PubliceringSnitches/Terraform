@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Download Blob
         run: |
-          az storage blob download --account-name snitchedstate --container-name statecontainer --name terraform.tfstate --connection-string "DefaultEndpointsProtocol=https;AccountName=snitchedstate;AccountKey=g2SEECR93QBJdFaru+BM6oQyJOWTt5Vh/5htsIH3VkO+L3E3iPVHv42DkZrX8egDZZ3CP+Ubhw8I+AStyeKP2w==;EndpointSuffix=core.windows.net" --type blob --destination ./terraform.tfstate
+          az storage blob download --account-name snitchedstate --container-name statecontainer --name terraform.tfstate --connection-string "DefaultEndpointsProtocol=https;AccountName=snitchedstate;AccountKey=g2SEECR93QBJdFaru+BM6oQyJOWTt5Vh/5htsIH3VkO+L3E3iPVHv42DkZrX8egDZZ3CP+Ubhw8I+AStyeKP2w==;EndpointSuffix=core.windows.net" --type file --destination ./terraform.tfstate
 
       - name: Checkout Terraform Repository
         uses: actions/checkout@v2
