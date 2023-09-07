@@ -38,7 +38,7 @@ resource "azurerm_app_service_source_control" "FA_CODE" {
   repo_url = "https://github.com/Labb3PubliceringSnitches/PolisappAPI.git"
   branch   = "main"
   depends_on = [ azurerm_linux_function_app.polisapi,
-                 azurerm_app_service_source_control_token.token ]
+                 azurerm_source_control_token.token ]
 }
 
 data "azurerm_function_app_host_keys" "FA_KEY" {

@@ -26,7 +26,7 @@ resource "azurerm_linux_web_app" "webapp_snitches" {
   }
 
   depends_on = [ azurerm_service_plan.Asp_Snitches,
-                 azurerm_function_app_host_keys.FA_KEY]
+                 data.azurerm_function_app_host_keys.FA_KEY]
 }
 
 # The code -----------------------------------------------------------------------------------
