@@ -9,7 +9,7 @@ on:
  
 jobs:
   terraform:
-    name: 'Getting all Github Secrets'
+    name: 'Updating Terraform and deploying to Azure'
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -41,21 +41,18 @@ jobs:
       with:
         tf_actions_version: 1.5.6
         tf_actions_subcommand: 'init'
-        tf_actions_working_dir: "./terraform"
  
     - name: 'Terraform Validate'
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_version: 1.5.6
         tf_actions_subcommand: 'validate'
-        tf_actions_working_dir: "./terraform"
          
     - name: 'Terraform Plan'
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_version: 1.5.6
         tf_actions_subcommand: 'plan'
-        tf_actions_working_dir: "./terraform"
  
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main'
@@ -63,4 +60,3 @@ jobs:
       with:
         tf_actions_version: 1.5.6
         tf_actions_subcommand: 'apply'
-        tf_actions_working_dir: "./terraform"
