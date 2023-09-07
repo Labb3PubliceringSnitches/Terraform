@@ -3,6 +3,7 @@ resource "azurerm_storage_account" "Function_storage" {
   resource_group_name      = local.RGname
   location                 = local.RGlocation
   account_tier             = "Standard"
+  account_kind             = "StorageV2"
   account_replication_type = "LRS"
 
   depends_on = [ azurerm_resource_group.Snitches_RG ]
@@ -36,7 +37,8 @@ resource "azurerm_app_service_source_control" "FA_CODE" {
   app_id   = azurerm_linux_function_app.polisapi.id
   repo_url = "https://github.com/Labb3PubliceringSnitches/PolisappAPI.git"
   branch   = "main"
-  depends_on = [ azurerm_linux_function_app.polisapi ]
+  depends_on = [ azurerm_linux_function_app.polisapi,
+                 azurerm_app_service_source_control_token.token ]
 }
 
 data "azurerm_function_app_host_keys" "FA_KEY" {

@@ -25,7 +25,8 @@ resource "azurerm_linux_web_app" "webapp_snitches" {
     "Function_app_name" = azurerm_linux_function_app.polisapi.name
   }
 
-  depends_on = [ azurerm_service_plan.Asp_Snitches]
+  depends_on = [ azurerm_service_plan.Asp_Snitches,
+                 azurerm_function_app_host_keys.FA_KEY]
 }
 
 # The code -----------------------------------------------------------------------------------
@@ -33,7 +34,8 @@ resource "azurerm_app_service_source_control" "Production_Code" {
   app_id   = azurerm_linux_web_app.webapp_snitches.id
   repo_url = "https://github.com/Labb3PubliceringSnitches/PolisApp.git"
   branch   = "main"
-  depends_on = [ azurerm_linux_web_app.webapp_snitches]
+  depends_on = [ azurerm_linux_web_app.webapp_snitches,
+                 azurerm_source_control_token.token ]
 }
 
 ## Connect to log analytics 
@@ -89,3 +91,4 @@ resource "azurerm_source_control_token" "token" {
   token = var.SOURCE_PAT_ME
   depends_on = [ azurerm_resource_group.Snitches_RG ]
 }
+
