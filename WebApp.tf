@@ -22,14 +22,13 @@ resource "azurerm_linux_web_app" "webapp_snitches" {
 
   app_settings = {
     "Function_default_key" = local.FA_KEY
-    "Function_app_name" = azurerm_function_app.polisapi.name
+    "Function_app_name" = azurerm_linux_function_app.polisapi.name
   }
 
   depends_on = [ azurerm_service_plan.Asp_Snitches]
 }
 
 # The code -----------------------------------------------------------------------------------
-#HEJ
 resource "azurerm_app_service_source_control" "Production_Code" {
   app_id   = azurerm_linux_web_app.webapp_snitches.id
   repo_url = "https://github.com/Labb3PubliceringSnitches/PolisApp.git"
