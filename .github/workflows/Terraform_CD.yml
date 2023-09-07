@@ -20,6 +20,7 @@ jobs:
       TF_VAR_AZURE_CLIENT_ID_SECRET: ${{ secrets.AZURE_CLIENT_ID }}
       TF_VAR_AZURE_CLIENT_SECRET_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       TF_VAR_SOURCE_PAT: ${{ secrets.SOURCE_PAT }}
+      TF_VAR_SOURCE_PAT_ME: ${{ secrets.SOURCE_PAT_ME }}
 
     runs-on: ubuntu-latest
     environment: production
