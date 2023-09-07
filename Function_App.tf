@@ -25,6 +25,8 @@ resource "azurerm_linux_function_app" "polisapi" {
   service_plan_id            = azurerm_service_plan.function_plan.id
   storage_account_name       = azurerm_storage_account.Function_storage.name
   storage_account_access_key = azurerm_storage_account.Function_storage.primary_access_key
+
+  site_config { }
 }
 
 resource "azurerm_app_service_source_control" "FA_CODE" {
