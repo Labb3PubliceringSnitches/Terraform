@@ -30,7 +30,7 @@ jobs:
           terraform_version: latest
 
       - name: Terraform Init
-        run: terraform init -backend-config=backend.tf
+        run: terraform init -backend-config=main.tf
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan
