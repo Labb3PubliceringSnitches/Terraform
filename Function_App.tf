@@ -37,3 +37,11 @@ resource "azurerm_app_service_source_control" "FA_CODE" {
   branch   = "main"
   depends_on = [ azurerm_function_app.polisapi ]
 }
+
+data "azurerm_function_app_host_keys" "FA_KEY" {
+  name                = "polisapi-functions"
+  resource_group_name = local.RGname
+
+  depends_on = [ azurerm_resource_group.Snitches_RG,
+                 azurerm_function_app.polisapi]
+}
