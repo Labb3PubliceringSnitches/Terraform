@@ -28,7 +28,7 @@ resource "azurerm_linux_function_app" "polisapi" {
 
   site_config { }
 
-  depends_on = [ azurerm_service_plan.PolisAfunction_planPI_ASP,
+  depends_on = [ azurerm_service_plan.function_plan,
                  azurerm_storage_account.Function_storage]
 }
 
