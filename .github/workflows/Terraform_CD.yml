@@ -63,3 +63,10 @@ jobs:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'apply'
         tf_actions_working_dir: "./terraform"
+
+    - name: Find Terraform State File
+      id: find-state
+      run: |
+        # Use the find command to locate the Terraform state file
+        state_file=$(find ./terraform -name "terraform.tfstate" -print -quit)
+        echo "::set-output name=state_file::$state_file"
