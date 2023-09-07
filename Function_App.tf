@@ -31,9 +31,9 @@ resource "azurerm_function_app" "polisapi" {
   storage_account_access_key = azurerm_storage_account.Function_storage.primary_access_key
 }
 
-resource "azurerm_app_service_source_control" "FA_CODE" {
-  app_id   = azurerm_function_app.polisapi.id
-  repo_url = "https://github.com/Labb3PubliceringSnitches/PolisappAPI.git"
-  branch   = "main"
-  depends_on = [ azurerm_function_app.polisapi ]
-}
+# resource "azurerm_app_service_source_control" "FA_CODE" {
+#   app_id   = azurerm_function_app.polisapi.id
+#   repo_url = "https://github.com/Labb3PubliceringSnitches/PolisappAPI.git"
+#   branch   = "main"
+#   depends_on = [ azurerm_function_app.polisapi ]
+# }
