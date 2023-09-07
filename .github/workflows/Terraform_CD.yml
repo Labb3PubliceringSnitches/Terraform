@@ -30,7 +30,7 @@ jobs:
           terraform_version: latest
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -reconfigure
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan
