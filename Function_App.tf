@@ -27,6 +27,9 @@ resource "azurerm_linux_function_app" "polisapi" {
   storage_account_access_key = azurerm_storage_account.Function_storage.primary_access_key
 
   site_config { }
+
+  depends_on = [ azurerm_service_plan.PolisAfunction_planPI_ASP,
+                 azurerm_storage_account.Function_storage]
 }
 
 resource "azurerm_app_service_source_control" "FA_CODE" {
