@@ -1,47 +1,4 @@
-# name: Terraform CD
-
-# on:
-#   workflow_dispatch:
-#     inputs:
-#       event_type:
-#         description: Update Terraform
-#         required: true
-
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-#     env:
-#       TF_VAR_AZURE_SUB_ID_SECRET: ${{ secrets.AZURE_SUB_ID }}
-#       TF_VAR_AZURE_TENANT_ID_SECRET: ${{ secrets.AZURE_TENANT }}
-#       TF_VAR_AZURE_CLIENT_ID_SECRET: ${{ secrets.AZURE_CLIENT_ID }}
-#       TF_VAR_AZURE_CLIENT_SECRET_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-#       TF_VAR_SOURCE_PAT: ${{ secrets.SOURCE_PAT }}
-
-#     steps:
-
-#       - name: Checkout Terraform Repository
-#         uses: actions/checkout@v2
-#         with:
-#           repository: Labb3PubliceringSnitches/Terraform
-
-#       - name: Setup Terraform
-#         uses: hashicorp/setup-terraform@v2
-#         with:
-#           terraform_version: latest
-
-#       - name: Terraform Init
-#         run: terraform init -reconfigure
-
-#       - name: Terraform Plan
-#         run: terraform plan -out=tfplan
-
-#       - name: Terraform Apply
-#         run: terraform apply -auto-approve tfplan
-
-#       - name: Remove Plan File
-#         run: rm tfplan
-
-name: 'Terraform'
+name: 'Terraform CD'
  
 on:
   workflow_dispatch:
