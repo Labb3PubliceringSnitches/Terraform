@@ -8,34 +8,30 @@ resource "azurerm_storage_account" "Function_storage" {
   depends_on = [ azurerm_resource_group.Snitches_RG ]
 }
 
-resource "azurerm_app_service_plan" "function_plan" {
+resource "azurerm_service_plan" "function_plan" {
   name                = "api-functions-service-plan"
   location            = local.RGlocation
   resource_group_name = local.RGname
-  kind                = "FunctionApp"
-
-  sku {
-    tier = "Dynamic"
-    size = "Y1"
-  }
+  os_type             = "Linux"
+  sku_name            = "Y1"
 
   depends_on = [ azurerm_resource_group.Snitches_RG ]
 }
 
-resource "azurerm_function_app" "polisapi" {
+resource "azurerm_linux_function_app" "polisapi" {
   name                       = "polisapi-functions"
   location                   = local.RGlocation
   resource_group_name        = local.RGname
-  app_service_plan_id        = azurerm_app_service_plan.function_plan.id
+  service_plan_id            = azurerm_service_plan.function_plan.id
   storage_account_name       = azurerm_storage_account.Function_storage.name
   storage_account_access_key = azurerm_storage_account.Function_storage.primary_access_key
 }
 
 resource "azurerm_app_service_source_control" "FA_CODE" {
-  app_id   = azurerm_function_app.polisapi.id
+  app_id   = azurerm_linux_function_app.polisapi.id
   repo_url = "https://github.com/Labb3PubliceringSnitches/PolisappAPI.git"
   branch   = "main"
-  depends_on = [ azurerm_function_app.polisapi ]
+  depends_on = [ azurerm_linux_function_app.polisapi ]
 }
 
 data "azurerm_function_app_host_keys" "FA_KEY" {
@@ -43,5 +39,5 @@ data "azurerm_function_app_host_keys" "FA_KEY" {
   resource_group_name = local.RGname
 
   depends_on = [ azurerm_resource_group.Snitches_RG,
-                 azurerm_function_app.polisapi]
+                 azurerm_linux_function_app.polisapi]
 }
