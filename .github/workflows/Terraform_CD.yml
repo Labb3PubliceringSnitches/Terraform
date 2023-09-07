@@ -44,10 +44,11 @@
 name: 'Terraform'
  
 on:
-  push:
-    branches:
-    - main
-  pull_request:
+  workflow_dispatch:
+    inputs:
+      event_type:
+        description: Update Terraform
+        required: true
  
 jobs:
   terraform:
