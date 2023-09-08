@@ -10,11 +10,11 @@ resource "azurerm_windows_function_app" "polisapi" {
   site_config {}
 
   depends_on = [ azurerm_service_plan.function_plan,
-                 azurerm_storage_account.PolisAPI_FA_SA]
+                 azurerm_storage_account.Function_storage]
 
 }
 
-resource "azurerm_service_plan" "PolisAPI_ASP" {
+resource "azurerm_service_plan" "function_plan" {
   name                = "polisapi-asp"
   location            = local.RGlocation
   resource_group_name = local.RGname
@@ -38,8 +38,8 @@ resource "azurerm_app_service_source_control" "Source_Code" {
   app_id   = azurerm_windows_function_app.polisapi.id
   repo_url = "https://github.com/IamFrampt/Labb2PolisFunctionApp.git"
   branch   = "master"
-  depends_on = [ azurerm_windows_function_app.PolisApi_Function,
-                 azurerm_app_service_source_control_token.token ]
+  depends_on = [ azurerm_windows_function_app.polisapi,
+                 azurerm_source_control_token.token ]
 }
 # Function key¨
 

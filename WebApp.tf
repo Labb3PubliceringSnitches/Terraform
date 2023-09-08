@@ -22,7 +22,7 @@ resource "azurerm_linux_web_app" "webapp_snitches" {
 
   app_settings = {
     "Function_default_key" = local.FA_KEY
-    "Function_app_name" = azurerm_linux_function_app.polisapi.name
+    "Function_app_name" = azurerm_windows_function_app.polisapi.name
   }
 
   depends_on = [ azurerm_service_plan.Asp_Snitches,
