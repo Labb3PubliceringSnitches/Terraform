@@ -51,12 +51,3 @@ jobs:
 
       - name: Remove Plan File
         run: rm tfplan
-      
-      - name: Authenticate Azure CLI with Service Principal
-        run: |
-          az login --service-principal --username ${{ secrets.AZURE_CLIENT_ID }} --password ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT }}
-          az account set --subscription ${{ secrets.AZURE_SUB_ID }}
-
-      - name: Restart Azure Web App
-        run: |
-          az webapp restart --name Snitches --resource-group labb3-snitches-rg
