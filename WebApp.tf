@@ -33,7 +33,7 @@ resource "azurerm_linux_web_app" "webapp_snitches" {
 resource "azurerm_app_service_source_control" "Production_Code" {
   app_id   = azurerm_linux_web_app.webapp_snitches.id
   repo_url = "https://github.com/IamFrampt/Glassoteket.git"
-  branch   = "main"
+  branch   = "master"
   depends_on = [ azurerm_linux_web_app.webapp_snitches,
                  azurerm_source_control_token.token ]
 }
