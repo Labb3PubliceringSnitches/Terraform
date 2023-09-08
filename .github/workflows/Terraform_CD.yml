@@ -36,24 +36,19 @@ jobs:
           repository: Labb3PubliceringSnitches/Terraform
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: latest
 
       - name: Terraform Init
-        uses: hashicorp/setup-terraform@v2
-        run: terraform init -reconfigure
+        run: terraform init
 
       - name: Terraform Plan
-        uses: hashicorp/setup-terraform@v2
         run: terraform plan -out=tfplan
 
       - name: Terraform Apply
-        uses: hashicorp/setup-terraform@v2
         run: terraform apply -auto-approve tfplan
 
       - name: Remove Plan File
-        uses: hashicorp/setup-terraform@v2
         run: rm tfplan
 
 
