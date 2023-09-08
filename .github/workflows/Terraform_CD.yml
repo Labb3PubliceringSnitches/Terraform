@@ -53,10 +53,15 @@ jobs:
       with:
         tf_actions_version: 1.5.6
         tf_actions_subcommand: 'plan'
- 
+      # Save the Terraform plan to a file
+      id: terraform_plan
+      continue-on-error: true
+
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main'
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_version: 1.5.6
         tf_actions_subcommand: 'apply'
+        # Use the saved plan file from the 'terraform_plan' step
+        tf_actions_plan_file: ${{ steps.terraform_plan.outputs.plan_file }}
