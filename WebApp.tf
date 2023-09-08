@@ -32,8 +32,8 @@ resource "azurerm_linux_web_app" "webapp_snitches" {
 # The code -----------------------------------------------------------------------------------
 resource "azurerm_app_service_source_control" "Production_Code" {
   app_id   = azurerm_linux_web_app.webapp_snitches.id
-  repo_url = "https://github.com/IamFrampt/Glassoteket.git"
-  branch   = "master"
+  repo_url = "https://github.com/Labb3PubliceringSnitches/PolisApp.git"
+  branch   = "main"
   depends_on = [ azurerm_linux_web_app.webapp_snitches,
                  azurerm_source_control_token.token ]
 }
