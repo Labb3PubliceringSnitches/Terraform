@@ -1,12 +1,12 @@
 name: 'Terraform CD'
- 
+
 on:
   workflow_dispatch:
     inputs:
       event_type:
         description: Update Terraform
         required: true
- 
+
 jobs:
   terraform:
     name: 'Updating Terraform and deploying to Azure'
@@ -24,15 +24,12 @@ jobs:
 
     runs-on: ubuntu-latest
     environment: production
- 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+
     defaults:
       run:
         shell: bash
- 
-    steps:
-    # Checkout the repository to the GitHub Actions runner
 
+    steps:
       - name: Checkout Terraform Repository
         uses: actions/checkout@v2
         with:
@@ -58,6 +55,7 @@ jobs:
       - name: Remove Plan File
         uses: hashicorp/setup-terraform@v2
         run: rm tfplan
+
 
     # - name: 'Terraform Init'
     #   uses: hashicorp/terraform-github-actions@master
