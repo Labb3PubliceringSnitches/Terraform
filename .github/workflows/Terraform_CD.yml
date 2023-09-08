@@ -51,3 +51,10 @@ jobs:
 
       - name: Remove Plan File
         run: rm tfplan
+      
+      - name: Restart Azure Web App
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.28.0  # Use the desired Azure CLI version
+          inlineScript: |
+            az webapp restart --name Snitches --resource-group Labb3-Snitches-RG
