@@ -49,36 +49,10 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
 
+      -name: Upload to blob storage
+       run: |
+          az storage blob upload --account-name snitchedstate --container-name statecontainer --name tfplan --connection-string "DefaultEndpointsProtocol=https;AccountName=snitchedstate;AccountKey=g2SEECR93QBJdFaru+BM6oQyJOWTt5Vh/5htsIH3VkO+L3E3iPVHv42DkZrX8egDZZ3CP+Ubhw8I+AStyeKP2w==;EndpointSuffix=core.windows.net"
+
+
       - name: Remove Plan File
         run: rm tfplan
-
-
-    # - name: 'Terraform Init'
-    #   uses: hashicorp/terraform-github-actions@master
-    #   with:
-    #     tf_actions_version: 1.5.6
-    #     tf_actions_subcommand: 'init'
- 
-    # - name: 'Terraform Validate'
-    #   uses: hashicorp/terraform-github-actions@master
-    #   with:
-    #     tf_actions_version: 1.5.6
-    #     tf_actions_subcommand: 'validate'
-         
-    # - name: 'Terraform Plan'
-    #   uses: hashicorp/terraform-github-actions@master
-    #   with:
-    #     tf_actions_version: 1.5.6
-    #     tf_actions_subcommand: 'plan'
-    #   # Save the Terraform plan to a file
-    #   id: terraform_plan
-    #   continue-on-error: true
-
-    # - name: Terraform Apply
-    #   if: github.ref == 'refs/heads/main'
-    #   uses: hashicorp/terraform-github-actions@master
-    #   with:
-    #     tf_actions_version: 1.5.6
-    #     tf_actions_subcommand: 'apply'
-    #     # Use the saved plan file from the 'terraform_plan' step
-    #     tf_actions_plan_file: ${{ steps.terraform_plan.outputs.plan_file }}
