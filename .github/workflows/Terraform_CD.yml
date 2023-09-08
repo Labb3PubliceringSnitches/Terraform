@@ -49,10 +49,5 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
 
-      -name: Upload to blob storage
-       run: |
-          az storage blob upload --account-name snitchedstate --container-name statecontainer --name tfplan --connection-string "DefaultEndpointsProtocol=https;AccountName=snitchedstate;AccountKey=g2SEECR93QBJdFaru+BM6oQyJOWTt5Vh/5htsIH3VkO+L3E3iPVHv42DkZrX8egDZZ3CP+Ubhw8I+AStyeKP2w==;EndpointSuffix=core.windows.net"
-
-
       - name: Remove Plan File
         run: rm tfplan
