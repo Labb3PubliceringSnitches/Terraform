@@ -52,9 +52,14 @@ jobs:
       - name: Remove Plan File
         run: rm tfplan
       
+      - name: Authenticate Azure CLI with Service Principal
+        run: |
+          az login --service-principal --username ${{ secrets.AZURE_CLIENT_ID }} --password ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT }}
+          az account set --subscription ${{ secrets.AZURE_SUB_ID }}
+
       - name: Restart Azure Web App
         uses: azure/CLI@v1
         with:
           azcliversion: 2.28.0  # Use the desired Azure CLI version
-          inlineScript: |
-            az webapp restart --name Snitches --resource-group labb3-snitches-rg --client-id ${{secrets.AZURE_CLIENT_ID}} --client-secret ${{secrets.AZURE_CLIENT_SECRET}} --tenant ${{secrets.AZURE_TENANT}}
+        inlineScript: |
+            az webapp restart --name Snitches --resource-group labb3-snitches-rg
