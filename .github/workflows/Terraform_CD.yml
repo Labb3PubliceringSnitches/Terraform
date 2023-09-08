@@ -58,5 +58,5 @@ jobs:
           az account set --subscription ${{ secrets.AZURE_SUB_ID }}
 
       - name: Restart Azure Web App
-          run: |
-            az webapp restart --name Snitches --resource-group labb3-snitches-rg
+        run: |
+          az webapp restart --name Snitches --resource-group labb3-snitches-rg
