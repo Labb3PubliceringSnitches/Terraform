@@ -25,10 +25,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
 
-    defaults:
-      run:
-        shell: bash
-
     steps:
       - name: Checkout Terraform Repository
         uses: actions/checkout@v2
@@ -50,34 +46,3 @@ jobs:
 
       - name: Remove Plan File
         run: rm tfplan
-
-
-    # - name: 'Terraform Init'
-    #   uses: hashicorp/terraform-github-actions@master
-    #   with:
-    #     tf_actions_version: 1.5.6
-    #     tf_actions_subcommand: 'init'
- 
-    # - name: 'Terraform Validate'
-    #   uses: hashicorp/terraform-github-actions@master
-    #   with:
-    #     tf_actions_version: 1.5.6
-    #     tf_actions_subcommand: 'validate'
-         
-    # - name: 'Terraform Plan'
-    #   uses: hashicorp/terraform-github-actions@master
-    #   with:
-    #     tf_actions_version: 1.5.6
-    #     tf_actions_subcommand: 'plan'
-    #   # Save the Terraform plan to a file
-    #   id: terraform_plan
-    #   continue-on-error: true
-
-    # - name: Terraform Apply
-    #   if: github.ref == 'refs/heads/main'
-    #   uses: hashicorp/terraform-github-actions@master
-    #   with:
-    #     tf_actions_version: 1.5.6
-    #     tf_actions_subcommand: 'apply'
-    #     # Use the saved plan file from the 'terraform_plan' step
-    #     tf_actions_plan_file: ${{ steps.terraform_plan.outputs.plan_file }}
