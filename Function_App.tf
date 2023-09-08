@@ -36,7 +36,7 @@ resource "azurerm_storage_account" "Function_storage" {
 
 resource "azurerm_app_service_source_control" "Source_Code" {
   app_id   = azurerm_windows_function_app.polisapi.id
-  repo_url = "https://github.com/Labb3PubliceringSnitches/PolisappAPI.git"
+  repo_url = "https://github.com/Labb3PubliceringSnitches/PolisappAPI"
   branch   = "master"
   depends_on = [ azurerm_windows_function_app.polisapi,
                  azurerm_source_control_token.token ]
