@@ -36,13 +36,16 @@ jobs:
       - name: Check if Workflow is Running
         id: check_workflow
         run: |
-          RESPONSE=$(curl -s -X GET -u ${{ secrets.GITHUB_ACTOR }}:${{ secrets.GITHUB_TOKEN }} \
-            "https://api.github.com/repos/${{ github.repository }}/actions/runs?event=repository_dispatch&status=in_progress")
+          # Query the GitHub API to check for running instances of the same workflow
+          RESPONSE=$(curl -s -X GET -u "${{ secrets.GITHUB_ACTOR }}:${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/${{ github.workflow }}/runs")
 
-          if [[ $(echo "$RESPONSE" | jq '.total_count') -gt 0 ]]; then
+          # Check if there's a running workflow other than the current one
+          if [[ $(echo "$RESPONSE" | jq '.workflow_runs | .[] | select(.status == "in_progress" and .id != ${{ github.run_id }})') ]]; then
             echo "Another instance of the workflow is already running. Exiting."
             exit 0
           fi
+
 
       - name: Checkout Terraform Repository
         uses: actions/checkout@v3
