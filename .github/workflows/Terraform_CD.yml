@@ -21,6 +21,9 @@ jobs:
       TF_VAR_SOURCE_PAT_ME: ${{ secrets.SOURCE_PAT_ME }}
 
     runs-on: ubuntu-latest
+    concurrency:
+      group: terraform-lock
+      cancel-in-progress: true  # This ensures that previous runs are canceled when a new one starts
     environment: production
 
     defaults:
@@ -28,19 +31,6 @@ jobs:
         shell: bash
 
     steps:
-      - name: Check if Workflow Lock File Exists
-        id: check_lock_file
-        run: |
-          if [ -f workflow.lock ]; then
-            echo "Another instance of the workflow is already running. Exiting."
-            exit 0
-          fi
-
-      - name: Create Workflow Lock File
-        if: steps.check_lock_file.outputs.status != 'success'  # Only create if the lock file doesn't exist
-        run: |
-          touch workflow.lock
-
       - name: Checkout Terraform Repository
         uses: actions/checkout@v3
         with:
