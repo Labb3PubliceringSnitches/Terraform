@@ -1,11 +1,10 @@
 name: 'Terraform CD'
 
 on:
-  workflow_dispatch:
-    inputs:
-      event_type:
-        description: Update Terraform
-        required: true
+  push:
+    paths:
+      - 'Snitches_function_API/**'
+      - 'SnitchesApp/**'
 
 jobs:
   terraform:
@@ -31,7 +30,7 @@ jobs:
 
     steps:
       - name: Checkout Terraform Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: Labb3PubliceringSnitches/Terraform
 

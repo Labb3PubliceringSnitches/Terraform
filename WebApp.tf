@@ -1,5 +1,5 @@
 resource "azurerm_service_plan" "Asp_Snitches" {
-  name                = "ASP_ME"
+  name                = "ASP_Snitches"
   resource_group_name = local.RGname
   location            = local.RGlocation
   os_type             = "Linux"
@@ -32,10 +32,10 @@ resource "azurerm_linux_web_app" "webapp_snitches" {
 # The code -----------------------------------------------------------------------------------
 resource "azurerm_app_service_source_control" "Production_Code" {
   app_id   = azurerm_linux_web_app.webapp_snitches.id
-  repo_url = "https://github.com/Labb3PubliceringSnitches/PolisApp"
-  branch   = "main"
+  repo_url = "https://github.com/Labb3PubliceringSnitches/SnitchesApp.git"
+  branch   = "master"
   depends_on = [ azurerm_linux_web_app.webapp_snitches,
-                 azurerm_source_control_token.token ]
+                 azurerm_source_control_token.PAT ]
 }
 
 ## Connect to log analytics 
@@ -86,7 +86,7 @@ resource "azurerm_application_insights_smart_detection_rule" "Snitches_WA_DS" {
   depends_on = [ azurerm_application_insights.webapp_AppInsights ]
 }
 
-resource "azurerm_source_control_token" "token" {
+resource "azurerm_source_control_token" "PAT" {
   type  = "GitHub"
   token = var.SOURCE_PAT_ME
   depends_on = [ azurerm_resource_group.Snitches_RG ]
