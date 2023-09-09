@@ -28,24 +28,18 @@ jobs:
         shell: bash
 
     steps:
-      - name: Setup
+      - name: Check if Workflow Lock File Exists
+        id: check_lock_file
         run: |
-          sudo apt-get update
-          sudo apt-get install jq -y
-
-      - name: Check if Workflow is Running
-        id: check_workflow
-        run: |
-          # Query the GitHub API to check for running instances of the same workflow
-          RESPONSE=$(curl -s -X GET -u "${{ secrets.GITHUB_ACTOR }}:${{ secrets.GITHUB_TOKEN }}" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/${{ github.workflow }}/runs")
-
-          # Check if there's a running workflow other than the current one
-          if [[ $(echo "$RESPONSE" | jq '.workflow_runs | .[] | select(.status == "in_progress" and .id != ${{ github.run_id }})') ]]; then
+          if [ -f workflow.lock ]; then
             echo "Another instance of the workflow is already running. Exiting."
             exit 0
           fi
 
+      - name: Create Workflow Lock File
+        if: steps.check_lock_file.outputs.status != 'success'  # Only create if the lock file doesn't exist
+        run: |
+          touch workflow.lock
 
       - name: Checkout Terraform Repository
         uses: actions/checkout@v3
@@ -68,6 +62,10 @@ jobs:
 
       - name: Remove Plan File
         run: rm tfplan
+        
+      - name: Cleanup Workflow Lock File
+        run: |
+          rm -f workflow.lock
       
       # - name: Authenticate Azure CLI with Service Principal
       #   run: |
