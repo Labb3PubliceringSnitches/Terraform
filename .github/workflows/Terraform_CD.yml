@@ -28,6 +28,22 @@ jobs:
         shell: bash
 
     steps:
+      - name: Setup
+        run: |
+          sudo apt-get update
+          sudo apt-get install jq -y
+
+      - name: Check if Workflow is Running
+        id: check_workflow
+        run: |
+          RESPONSE=$(curl -s -X GET -u ${{ secrets.GITHUB_ACTOR }}:${{ secrets.GITHUB_TOKEN }} \
+            "https://api.github.com/repos/${{ github.repository }}/actions/runs?event=repository_dispatch&status=in_progress")
+
+          if [[ $(echo "$RESPONSE" | jq '.total_count') -gt 0 ]]; then
+            echo "Another instance of the workflow is already running. Exiting."
+            exit 0
+          fi
+
       - name: Checkout Terraform Repository
         uses: actions/checkout@v3
         with:
