@@ -21,6 +21,9 @@ jobs:
       TF_VAR_SOURCE_PAT_ME: ${{ secrets.SOURCE_PAT_ME }}
 
     runs-on: ubuntu-latest
+    concurrency:
+      group: terraform-lock
+      cancel-in-progress: true  # This ensures that previous runs are canceled when a new one starts
     environment: production
 
     defaults:
@@ -49,6 +52,12 @@ jobs:
 
       - name: Remove Plan File
         run: rm main.tfplan
+
+        run: rm tfplan
+        
+      - name: Cleanup Workflow Lock File
+        run: |
+          rm -f workflow.lock
       
       # - name: Authenticate Azure CLI with Service Principal
       #   run: |
