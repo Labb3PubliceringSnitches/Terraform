@@ -52,8 +52,6 @@ jobs:
 
       - name: Remove Plan File
         run: rm main.tfplan
-
-        run: rm tfplan
         
       - name: Cleanup Workflow Lock File
         run: |
