@@ -1,54 +1,24 @@
+resource "azurerm_logic_app_workflow" "Snitches_logicapp" {
+  name                = "SendMailWhenNewSnitch"
+  location            = local.RGlocation
+  resource_group_name = local.RGname
+}
 
-resource "azurerm_logic_app_workflow" "Snitches_logic" {
-name                = "snitches_logicapp"
-location            = local.RGlocation
-resource_group_name = local.RGname
+resource "azurerm_logic_app_trigger_http_request" "Snitches_http" {
+  name         = "Snitch-http-trigger"
+  logic_app_id = azurerm_logic_app_workflow.Snitches_logicapp.id
 
-definition = <<EOF
+  schema = <<SCHEMA
 {
-    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-    "actions": {
-        "Send_an_email_(V2)": {
-            "type": "ApiConnection",
-            "inputs": {
-                "body": {
-                    "To": "rickard.bohman@iths.se",
-                    "Subject": "New HTTP Request",
-                    "Body": "A new HTTP request has been received."
-                },
-                "host": {
-                    "connectionName": "@parameters('$connections')['office365']['connectionId']"
-                },
-                "method": "post",
-                "path": "/v2/Mail"
-            },
-            "runAfter": {},
-            "type": "ApiConnection"
-        }
-    },
-    "contentVersion": "1.0.0.0",
-    "outputs": {
-        "test"
-    },
-    "triggers": {
-        "manual": {
-            "inputs": {
-                "schema": {
-                    "type": "object",
-                "properties": {
-                    "snitchstory": {
-                        "type": "string"
-                    }
-                },
-                "required": ["snitchstory"]
-            }
-                }
-            },
-            "kind": "Http",
-            "type": "Request"
-        }
+    "type": "object",
+    "properties": {
+        "SnitchesStory": {
+            "type": "string"
+        },
+            "required": ["SnitchesStory"]
+        
     }
 }
-EOF
-}
+SCHEMA
 
+}
