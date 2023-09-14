@@ -38,32 +38,32 @@ resource "azurerm_app_service_source_control" "Production_Code" {
                  azurerm_source_control_token.PAT ]
 }
 
-# resource "azurerm_app_service_source_control_slot" "Staging" {
-#   slot_id  = azurerm_linux_web_app_slot.webapp_snitches_Staging.id
-#   repo_url = "https://github.com/Labb3PubliceringSnitches/SnitchesApp.git"
-#   branch   = "master"
+resource "azurerm_app_service_source_control_slot" "Staging" {
+  slot_id  = azurerm_linux_web_app_slot.webapp_snitches_Staging.id
+  repo_url = "https://github.com/Labb3PubliceringSnitches/SnitchesApp.git"
+  branch   = "master"
 
-#   depends_on = [ azurerm_linux_web_app_slot.webapp_snitches_Staging ]
-# }
+  depends_on = [ azurerm_linux_web_app_slot.webapp_snitches_Staging ]
+}
 
 
 ## Slots
 
-# resource "azurerm_linux_web_app_slot" "webapp_snitches_Staging" {
-#   name             = "Staging"
-#   app_service_id   = azurerm_linux_web_app.webapp_snitches.id
-#   service_plan_id  = azurerm_service_plan.Asp_Snitches.id
+resource "azurerm_linux_web_app_slot" "webapp_snitches_Staging" {
+  name             = "Staging"
+  app_service_id   = azurerm_linux_web_app.webapp_snitches.id
+  service_plan_id  = azurerm_service_plan.Asp_Snitches.id
 
-#   site_config {}
+  site_config {}
 
-#     app_settings = {
-#     "Function_default_key" = local.FA_KEY
-#     "Function_app_name" = azurerm_windows_function_app.polisapi.name
-#   }
+    app_settings = {
+    "Function_default_key" = local.FA_KEY
+    "Function_app_name" = azurerm_windows_function_app.polisapi.name
+  }
 
-#   depends_on = [ azurerm_linux_web_app.webapp_snitches,
-#                  azurerm_service_plan.Asp_Snitches]
-# }
+  depends_on = [ azurerm_linux_web_app.webapp_snitches,
+                 azurerm_service_plan.Asp_Snitches]
+}
 
 ## Connect to log analytics 
 
@@ -145,7 +145,7 @@ resource "azurerm_monitor_autoscale_setting" "SnitchesScaleSet" {
         time_window        = "PT5M"
         time_aggregation   = "Average"
         operator           = "GreaterThan"
-        threshold          = 75
+        threshold          = 70
       }
 
       scale_action {
